@@ -19,13 +19,33 @@
                 <a th:href="@{/}" class="navbar-brand">TechJobs</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a th:href="@{/search}">Search</a></li>
-                    <li><a th:href="@{/list}">List</a></li>
+                <ul th:each="action : ${actions}" class="nav navbar-nav">
+                    <li><a th:href="@{'/' + ${action.key}}" th:text="${action.value}"></a></li>
                 </ul>
             </div>
         </div>
     </div>
+
+    <table th:fragment="list-generator" class="job-listing">
+        <tr th:each="job : ${jobs}">
+            <td>
+                <p th:utext="${'<b>Job ID: </b>' + job.id}"></p>
+                <p th:utext="${'<b>Job Name: </b>' + job.name}"></p>
+                <p><b>Employer: </b>
+                    <a th:href="@{/list/jobs(column=${'employer'},value=${job.employer})}" th:text="${job.employer}"></a>
+                </p>
+                <p><b>Job Location: </b>
+                    <a th:href="@{/list/jobs(column=${'location'},value=${job.location})}" th:text="${job.location}"></a>
+                </p>
+                <p><b>Position Type: </b>
+                    <a th:href="@{/list/jobs(column=${'positionType'},value=${job.positionType})}" th:text="${job.positionType}"></a>
+                </p>
+                <p><b>Required Job Skills: </b>
+                    <a th:href="@{/list/jobs(column=${'coreCompetency'},value=${job.coreCompetency})}" th:text="${job.coreCompetency}"></a>
+                </p>
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>
